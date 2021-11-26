@@ -22,9 +22,13 @@
 
 <body>
     {% if user.is_authenticated %}
-        {% include "./header.html" %}
+        {% if user.is_staff %}
+            {% include "./header.html" %}
+        {% else %}
+            {% include "./headerStudent.html" %}
+        {% endif %}
     {% else %}
-    {% include "./headerSignedOut.html" %}
+        {% include "./headerSignedOut.html" %}
     {% endif %}
     
     <section class="banner">

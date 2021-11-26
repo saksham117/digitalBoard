@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'digitalBoard',
         'USER': 'root',
-        'PASSWORD': 'Ragnarok@3',
+        'PASSWORD': os.environ.get('MY_SQL_ROOT_PSSWD'),
         'HOST': '127.0.0.1',
         'PORT': '3306',
     }
@@ -160,7 +160,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # add a site ID and redirect users to the base route after a successful login or logout.
-SITE_ID = 3
+SITE_ID = 4
 LOGIN_REDIRECT_URL = '/classroom'
 LOGOUT_REDIRECT_URL = '/'
 
@@ -169,3 +169,21 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 ]
+
+
+# for sending mail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+
+# for storing files on aws s3 bucket
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+
+AWS_S3_FILE_OVERWRITE = False # prevent file with same names from being overwritten. Files with same name will be appended with characters to differentiate btw them
+AWS_DEFAULT_ACL = None 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

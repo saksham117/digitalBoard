@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Create Class</title>
+    <title>Join a Class</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}">
@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/home/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/classroom/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/classroom/messages.css' %}">
+
 
 </head>
 <body>
@@ -55,8 +57,17 @@
                 {% endfor %}
 
                 <!-- <input type = "submit" value="Create Class"> -->
-                <input class="text-small-uppercase" id="submit" type="submit" value="Create Class">
+                <input class="text-small-uppercase" id="submit" type="submit" value="Join Class">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="error-message">
+                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{message}}
+                    </div>
+                    {% endfor %}
+                {% endif %}
             </form>
+            
         </main>
             
     <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>

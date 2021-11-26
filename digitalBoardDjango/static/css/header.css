@@ -179,6 +179,11 @@ i {
     background: #4B71FF;
     box-shadow: none;
   }
+
+  .brand-name-user {
+      color: white;
+      margin-left: 10px;
+  }
   .nav-item:hover .icon,
   .nav-item:hover .nav-link,
   .nav-item:hover .nav-text,
@@ -186,3 +191,6 @@ i {
     color: white;
     transition: 0.3s all ease-in-out;
   }
+
+
+

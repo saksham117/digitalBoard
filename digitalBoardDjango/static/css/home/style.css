@@ -100,11 +100,18 @@ body {
     font-size: 1.3rem;
     color: #00106a;
   }
+
+  .card h4.card-title {
+    font-weight: 500;
+    font-size: 1rem;
+    color: #00106a;
+  }
+
   .card p {
     color: #989dc5;
     font-size: 1rem;
     line-height: 1.5;
-    margin-bottom: 72px;
+    /* margin-bottom: 72px; */
   }
   .card .card-link {
     position: absolute;
@@ -128,3 +135,29 @@ body {
 .container {
     margin-bottom: 30px !important;
 }
+
+
+#joinClassImage{
+    position: absolute;
+    opacity: 0.25;
+    right: 0px;
+    top: 0px;
+    height: 300px;
+    z-index: -1;
+    filter: drop-shadow(0 3rem 0.05rem #bfd8ff);
+  }
+  @media (min-width: 768px) {
+    #joinClassImage{
+      display: inherit;
+      height: 400px;
+      top: 0px;
+      opacity: 0.5;
+    }
+  }
+  @media (min-width: 992px) {
+    #joinClassImage{
+      height: 500px;
+      top: -50px;
+      opacity: 1;
+    }
+  }

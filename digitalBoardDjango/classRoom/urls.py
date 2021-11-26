@@ -7,7 +7,13 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name = 'index'),
+    path('aboutus/', views.aboutUs, name='aboutus'),
     path('classroom/', views.classRoom, name='classroom'),
     path('createclass/', views.createClass, name='createclass'),
+    path('joinclass/', views.joinClass, name='joinclass'),
+    path('requestaccess/', views.sendEmail, name='requestaccess'),
+    path('classroomcontent/<str:classId>/', views.viewClassRoom, name='classroomcontent'),
+    path('classroomcontent/<str:classId>/createassignment/', views.createAssignment, name='createassignment'),
+    path('classroomcontent/<str:classId>/<str:taskCode>/', views.submitAssignment, name='submitassignment'),
 
 ]

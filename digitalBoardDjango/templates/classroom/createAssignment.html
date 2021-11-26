@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Create Class</title>
+    <title>Create Assignment</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}">
@@ -18,46 +18,52 @@
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/home/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/classroom/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/classroom/assignmentForm.css' %}">
+
 
 </head>
 <body>
     {% if user.is_staff %}
-        {% include "./header.html" %}
+        {% include "./classroomHeaderTeacher.html" %}
     {% else %}
-        {% include "./headerStudent.html" %}
+        {% include "./classroomHeaderStudent.html" %}
     {% endif %}
-        <main>
-            <figure>
-                <picture>
-                    <img src="https://img.freepik.com/free-vector/happy-women-learning-language-online-isolated-flat-vector-illustration-cartoon-female-characters-taking-individual-lessons-through-messenger-education-digital-technology-concept_74855-10088.jpg?size=626&ext=jpg" alt="Citymap illustration" />
-                </picture>
-            </figure>
-            <div class="headline">
-
+        <div class="flex-container">
+            <div class="form-group cardImage">
+                <img src='https://media.istockphoto.com/vectors/vector-isometric-scene-with-large-books-glasses-letter-a-and-reading-vector-id1163932370?k=20&m=1163932370&s=612x612&w=0&h=qMUzuL2Roa6NSE5YwwTuvc2Ry1Ondks5GcAxVVjoUzw=' alt=''>
+                <h1>Create Assignment</h1>
+               
+                
             </div>
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{form.non_field_errors}}
+            <div class="form-group ">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.non_field_errors}}
 
-                {% for field in form %}
-                    
-                        <span>
-                            <label class="text-small-uppercase" for="{{ field.auto_id }}">{{ field.label }}</label>
+                    {% for field in form %}
+            
+
+                        <div>
+                            <label class="formLabel" for="{{ field.auto_id }}">{{ field.label }}</label>
                             {{field}}
-                        </span> 
-                    
-                    {% for error in field.errors %}
-                        <span class = "errorlist">
-                            {{error}}
-                        </span>
+                        </div>
+                            
+                        
+                        {% for error in field.errors %}
+                            <span class = "errorlist">
+                                {{error}}
+                            </span>
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-
-                <!-- <input type = "submit" value="Create Class"> -->
-                <input class="text-small-uppercase" id="submit" type="submit" value="Create Class">
-            </form>
-        </main>
+                    
+                    <button type="submit" class="btn btn-primary">Create Assignment</button>
+                    
+                </form>
+            </div>
+        </div>
+        
+            
+        
             
     <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
     <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
