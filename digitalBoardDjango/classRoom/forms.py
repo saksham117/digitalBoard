@@ -33,6 +33,9 @@ class CreateAssignmentForm(forms.Form):
         'class':'form-control-file',
         }
     ))
+    pin_item = forms.BooleanField(required=False, widget=forms.CheckboxInput(
+
+    ))
 
 
 class SubmitAssignmentForm(forms.Form):

@@ -41,29 +41,66 @@
             <div class="row">
                 {% if assignments %}
                     {% for assignment in assignments %}
-                        <div class="mb-30 col-md-6 col-lg-4">
-                            <div class="card">
-                            <img class="card-icon" src="{% static 'images/classroom/assignment.png' %}" alt="monitoring" >
-                            <h3 class="card-title">{{ assignment.title }}</h3>
-                            <h4 class="card-title"><i class="fas fa-calendar-alt"></i> {{assignment.submissionDate}} : Deadline</h4>
-                            <p class="card-text">
-                                {{ assignment.description }} <br>
-                                {% if assignment.attachments %}
-                                    <i class="fas fa-file-alt"></i> <a href="{{ assignment.attachments.url }}"> View Assignment</a> 
-                                {% else %}
-                                <i class="fas fa-file-alt"></i> No attachments
-                                {% endif %}
-                            </p>
+                        {% if assignment.pinned %}
+                            <div class="mb-30 col-md-6 col-lg-4">
+                                <div class="card">
+                                    <img class="card-icon" src="{% static 'images/classroom/assignment.png' %}" alt="monitoring" >
+                                    <h3 class="card-title">{{ assignment.title }} <i class="fas fa-bookmark" style="margin-left: 10%;"></i> </h3> 
+                                    <h4 class="card-title"><i class="fas fa-calendar-alt"></i> {{assignment.submissionDate}} : Deadline</h4>
+                                    <p class="card-text">
+                                        {{ assignment.description }} <br>
+                                        {% if assignment.attachments %}
+                                            <i class="fas fa-file-alt"></i> <a href="{{ assignment.attachments.url }}"> View Attachment</a> 
+                                        {% else %}
+                                        <i class="fas fa-file-alt"></i> No attachments
+                                        {% endif %}
+                                    </p>
 
-                            <a href="{% url 'submitassignment' class.classTeacherMail assignment.assignmentCode %}">
-                                <button type="button" class="btn btn-info submissionButton">Click Here to Submit</button>
-                            </a>
-                            
-                            
-                            <!-- <a class="card-link" href="#">Learn more</a> --> 
+                                    {% if user.is_staff %}
+                                        <a href="{% url 'viewSubmissions' class.classTeacherMail assignment.assignmentCode %}">
+                                            <button type="button" class="btn btn-info submissionButton">View Submissions</button>
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'submitassignment' class.classTeacherMail assignment.assignmentCode %}">
+                                            <button type="button" class="btn btn-info submissionButton">Click Here to Submit</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     {% endfor %}
+
+                    {% for assignment in assignments %}
+                        {% if not assignment.pinned %}
+                            <div class="mb-30 col-md-6 col-lg-4">
+                                <div class="card">
+                                    <img class="card-icon" src="{% static 'images/classroom/assignment.png' %}" alt="monitoring" >
+                                    <h3 class="card-title">{{ assignment.title }}</h3> 
+                                    <h4 class="card-title"><i class="fas fa-calendar-alt"></i> {{assignment.submissionDate}} : Deadline</h4>
+                                    <p class="card-text">
+                                        {{ assignment.description }} <br>
+                                        {% if assignment.attachments %}
+                                            <i class="fas fa-file-alt"></i> <a href="{{ assignment.attachments.url }}"> View Attachment</a> 
+                                        {% else %}
+                                        <i class="fas fa-file-alt"></i> No attachments
+                                        {% endif %}
+                                    </p>
+
+                                    {% if user.is_staff %}
+                                        <a href="{% url 'viewSubmissions' class.classTeacherMail assignment.assignmentCode %}">
+                                            <button type="button" class="btn btn-info submissionButton">View Submissions</button>
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'submitassignment' class.classTeacherMail assignment.assignmentCode %}">
+                                            <button type="button" class="btn btn-info submissionButton">Click Here to Submit</button>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+
                 {% else %}
                 </div>
                 </div>
@@ -85,6 +122,7 @@
         {% else %}
         <a href="{% provider_login_url 'google' %}">Login With Google</a>
         {% endif %}
+
 
 
 

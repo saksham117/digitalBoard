@@ -233,6 +233,7 @@ def createAssignment(request, classId):
                 description = fm.cleaned_data['description']
                 submissionDate = fm.cleaned_data['submission_date']
                 attachment = fm.cleaned_data['attachments']
+                pinned = fm.cleaned_data['pin_item']
                 classroom = Classroom.objects.get(classTeacherMail = classId)
                 assignmentCode = getClassCode(8)
                 
@@ -260,7 +261,8 @@ def createAssignment(request, classId):
                                   submissionDate = submissionDate,
                                   attachments = attachment,
                                   assignmentCode = assignmentCode,
-                                  classroom = classroom
+                                  classroom = classroom,
+                                  pinned = pinned
                                   )
                 createAssignmentObj.save()
                 messages.success(request, 'Assignment Created')
@@ -297,8 +299,8 @@ def submitAssignment(request,classId, taskCode):
                 studentEmail =  request.user.email
                 studentEmailAssignmentCode = studentEmail + taskCode
 
-                # checking if classCode generated is unique or not
-                # keep on generating a new classcode till we get a unique classcode
+                if comment == "":
+                    comment = "None"
                 
                 # making an entry into the database of classrooms
                 submitAssignmentObj = SubmitAssignment(
@@ -332,6 +334,7 @@ def submitAssignment(request,classId, taskCode):
                 print("No attachment so far!")
             
             fm = SubmitAssignmentForm()
+
             context = {
                 'assignment' : assignment,
                 'class' : classroom,
@@ -340,5 +343,30 @@ def submitAssignment(request,classId, taskCode):
 
             }
             return render(request, 'classroom/submitAssignment.html', context)
+    else: # when user is unauthenticated or not staff
+        return HttpResponseRedirect('/')
+
+
+def viewSubmissions(request,classId, taskCode):
+    if request.user.is_authenticated and request.user.is_staff:
+
+        listOfSubmissions = None 
+        classroom = Classroom.objects.get(classTeacherMail = classId)
+
+
+        try:
+            assignment = CreateAssignment.objects.get(assignmentCode = taskCode)
+            submissions = assignment.submitassignment_set.all()
+            listOfSubmissions = list(submissions)
+        except:
+            print("There are no submissions so far!!")
+
+
+        context = {
+            'submissions' : listOfSubmissions,
+            'class' : classroom,
+        }
+
+        return render(request, 'classroom/viewSubmissions.html', context)
     else: # when user is unauthenticated or not staff
         return HttpResponseRedirect('/')

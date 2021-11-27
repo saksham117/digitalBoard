@@ -27,6 +27,7 @@
 .formLabel{
     color: #020F53;
     font-weight: bold;
+    margin-right: 3%;
 }
 
 .form-control{
@@ -37,6 +38,11 @@
     color: #020F53;
     /* margin-bottom: 5%; */
 }
+
+/* input[type=checkbox]{
+    margin-top: 5%;
+} */
+
 .btn{
     margin-top:8%;
     background: #1279AD; /* fallback for old browsers */

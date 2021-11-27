@@ -15,5 +15,7 @@ urlpatterns = [
     path('classroomcontent/<str:classId>/', views.viewClassRoom, name='classroomcontent'),
     path('classroomcontent/<str:classId>/createassignment/', views.createAssignment, name='createassignment'),
     path('classroomcontent/<str:classId>/<str:taskCode>/', views.submitAssignment, name='submitassignment'),
+    path('classroomcontent/<str:classId>/<str:taskCode>/viewsubmissions', views.viewSubmissions, name='viewSubmissions'),
+
 
 ]

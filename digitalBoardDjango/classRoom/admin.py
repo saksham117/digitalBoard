@@ -16,7 +16,7 @@ class ClassCodesAdmin(admin.ModelAdmin):
     list_display = ('classCode',)
 
 class CreateAssignmentAdmin(admin.ModelAdmin):
-    list_display = ('title', 'description', 'submissionDate', 'assignmentCode', 'attachments', 'classroom')
+    list_display = ('title', 'description', 'submissionDate', 'assignmentCode', 'attachments', 'classroom', 'pinned')
 
 class AssignmentCodesAdmin(admin.ModelAdmin):
     list_display = ('assignmentCode',)
