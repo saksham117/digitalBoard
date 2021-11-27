@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>View Submissions</title>
+    <title>To Do</title>
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}">
@@ -24,32 +24,27 @@
 
 </head>
 <body>
-    {% if user.is_staff %}
-        {% include "./classroomHeaderTeacher.html" %}
-    {% else %}
-        {% include "./classroomHeaderStudent.html" %}
-    {% endif %}
-
+    {% include "./headerStudent.html" %}
         
     {% if user.is_authenticated %}
-            {% if submissions %}
+            {% if assignments %}
                 <div class="container-table">
-                    <h2>Submissions</h2>
+                    <h2>To Do List</h2>
                     <ul class="responsive-table">
                         <li class="table-header">
-                            <div class="col col-1">S.No</div>
-                            <div class="col col-2">Student</div>
-                            <div class="col col-3">Attachments</div>
-                            <div class="col col-4">Comment</div>
-                            <div class="col col-5">Day Submitted</div>
+                            <div class="col col-11">Submission Date</div>
+                            <div class="col col-21">Title</div>
+                            <div class="col col-31">Attachments</div>
+                            <div class="col col-41">Course</div>
+                            <div class="col col-51">Course ID</div>
                         </li>
-                        {% for submission in submissions %}
+                        {% for assignment in assignments %}
                             <li class="table-row">
-                                <div class="col col-1" data-label="S.No">{{ forloop.counter }}</div>
-                                <div class="col col-2" data-label="Student">{{submission.studentEmail}}</div>
-                                <div class="col col-3" data-label="Attachments"><a href="{{ submission.attachments.url }}">{{ submission.attachments}}</a></div>
-                                <div class="col col-4" data-label="Comment">{{submission.comment}}</div>
-                                <div class="col col-5" data-label="Submission Date">{{submission.submissionDate}}</div>
+                                <div class="col col-11" data-label="Submission Date">{{ assignment.submissionDate }}</div>
+                                <div class="col col-21" data-label="Title">{{ assignment.title }}</div>
+                                <div class="col col-31" data-label="Attachments"><a href="{{ assignment.attachments.url }}">{{ assignment.attachments}}</a></div>
+                                <div class="col col-41" data-label="Course">{{assignment.classroom.className}}</div>
+                                <div class="col col-51" data-label="Course ID">{{assignment.classroom.courseID}}</div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -59,9 +54,9 @@
                 <section class="banner">
                     <div class="container">
                     <div class="banner-text">
-                        <h1>No Assignments Submitted</h1>
+                        <h1>Hurray!</h1>
                         <p> 
-                            The students haven't uploaded any assignments so far!
+                            You have no pending assignments. All assignmnets have been submitted.
                         </p>
                     </div>
                     </div>

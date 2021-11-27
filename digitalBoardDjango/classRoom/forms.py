@@ -17,7 +17,7 @@ class CreateAssignmentForm(forms.Form):
         'class':'form-control',
         }
     ))
-    description = forms.CharField(required=False,widget=forms.TextInput( 
+    description = forms.CharField(required=False,widget=forms.TextInput(
         attrs={
             'class':'form-control',
             }
@@ -37,16 +37,14 @@ class CreateAssignmentForm(forms.Form):
 
     ))
 
-
 class SubmitAssignmentForm(forms.Form):
-    
     attachments = forms.FileField(required=True, widget=forms.ClearableFileInput(
         attrs={
         'class':'form-control-file',
         }
     ))
 
-    comment = forms.CharField(required=False,widget=forms.TextInput( 
+    comment = forms.CharField(required=False,widget=forms.TextInput(
         attrs={
             'class':'form-control',
             }

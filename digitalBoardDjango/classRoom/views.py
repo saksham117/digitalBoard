@@ -10,14 +10,13 @@ from django.contrib import messages
 from django.conf import settings
 from django.core.mail import send_mail
 
-
 # for generating the class code
 import random
 import string
 
+# for sorting to do list
+from operator import attrgetter
 
-
-# helper functions
 # helps to generate an alphanumeric classcode of given length
 def getClassCode(length):
     # With combination of lower and upper case letters and digits
@@ -25,14 +24,6 @@ def getClassCode(length):
     classCode = ''.join(random.choice(characters) for i in range(length))
     return classCode
 
-# tester function to print user details
-def print_user_details(request):
-    user = request.user
-    print(user.username)
-    print(user.email)
-
-
-# Create your views here.
 # returns the home page
 def index(request):
     return render(request, "index.html")
@@ -200,14 +191,8 @@ def viewClassRoom(request, classId):
             try:
                 # fetch all the classrooms the teacher teaches
                 assignments = classroom.createassignment_set.all()
-
                 print(assignments)
                 listOfAssignments = list(assignments)
-
-
-                # print(obj)
-                # print(list(obj.classTeacherMail.all()))
-                # listOfClasses = list(obj.classTeacherMail.all())
             except:
                 print("No assignments exist yet")
             
@@ -284,15 +269,13 @@ def createAssignment(request, classId):
 
 
 def submitAssignment(request,classId, taskCode):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and not(request.user.is_staff):
         if request.method == 'POST':
             fm = SubmitAssignmentForm(request.POST, request.FILES)
             if fm.is_valid():
                 print(fm)
 
                 # filtering out the data received from the form
-
-
                 attachment = fm.cleaned_data['attachments']
                 comment = fm.cleaned_data['comment']
                 assignment = CreateAssignment.objects.get(assignmentCode = taskCode)
@@ -370,3 +353,58 @@ def viewSubmissions(request,classId, taskCode):
         return render(request, 'classroom/viewSubmissions.html', context)
     else: # when user is unauthenticated or not staff
         return HttpResponseRedirect('/')
+
+
+def to_do_list(request):
+    """ Shows a list of all pending assignments """
+    if request.user.is_authenticated and not(request.user.is_staff):
+        # if the person is a student
+        studentEmail = request.user.email
+        listOfClasses = None # stores the classes in which the student studies
+        listOfAssignments = None # stores all the assignments in each of the classes he studies in
+        listOfTasks = None # stores list of pending assignments
+
+        try: # fetch all the classes the student studies in
+            obj = StudentClassroom.objects.get(pk = studentEmail)
+            listOfClasses = list(obj.classTeacherMail.all())
+        except:
+            print("No classrooms exist yet")
+
+        try: # fetch all assignments he was assigned
+            listOfAssignments = []
+            for classes in listOfClasses:
+                assignments = classes.createassignment_set.all()
+                assignments = list(assignments)
+                for task in assignments:
+                    listOfAssignments.append(task)
+        except:
+            listOfAssignments = None
+            print("No assignments exist yet")
+
+        try: # keep only those assignments that have not been submitted
+            listOfTasks = []
+            
+            for assignment in listOfAssignments:
+                if( assignment.submitassignment_set.filter(studentEmail = request.user.email) ):
+                    continue
+                else:
+                    print(assignment)
+                    listOfTasks.append(assignment)
+
+            print(listOfTasks)
+            listOfTasks.sort(key=lambda r: r.submissionDate) # sort them according to day of submission 
+        except:
+            listOfTasks = None
+            print("We ran into error while populating unsubmitted assignments")
+
+
+        context = {
+            'assignments' : listOfTasks,
+        }
+
+        return render(request, 'todoList.html', context)
+    else:
+        return HttpResponseRedirect('/')
+
+
+
