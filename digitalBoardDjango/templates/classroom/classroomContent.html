@@ -58,7 +58,7 @@
                                         {% endif %}
                                     </p>
 
-                                    {% if user.is_staff and not assignment.resource %}
+                                    {% if user.is_staff and user.email == class.teacher and not assignment.resource  %}
                                         <a href="{% url 'viewSubmissions' class.classTeacherMail assignment.assignmentCode %}">
                                             <button type="button" class="btn btn-info submissionButton">View Submissions</button>
                                         </a>
@@ -90,7 +90,7 @@
                                         {% endif %}
                                     </p>
 
-                                    {% if user.is_staff and not assignment.resource  %}
+                                    {% if user.is_staff and user.email == class.teacher and not assignment.resource  %}
                                         <a href="{% url 'viewSubmissions' class.classTeacherMail assignment.assignmentCode %}">
                                             <button type="button" class="btn btn-info submissionButton">View Submissions</button>
                                         </a>

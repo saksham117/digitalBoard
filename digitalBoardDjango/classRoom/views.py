@@ -222,6 +222,11 @@ def createAssignment(request, classId):
                 resource = fm.cleaned_data['resource']
                 classroom = Classroom.objects.get(classTeacherMail = classId)
                 assignmentCode = getClassCode(8)
+
+                if request.user.email != classroom.teacher:
+                    messages.error(request, 'You do not have the right permissions. You are a student in this class.')
+                    return redirect('classroomcontent', classId=classId)
+
                 
                 
                 # checking if classCode generated is unique or not
@@ -271,7 +276,7 @@ def createAssignment(request, classId):
 
 
 def submitAssignment(request,classId, taskCode):
-    if request.user.is_authenticated and not(request.user.is_staff):
+    if request.user.is_authenticated:
         if request.method == 'POST':
             fm = SubmitAssignmentForm(request.POST, request.FILES)
             if fm.is_valid():
