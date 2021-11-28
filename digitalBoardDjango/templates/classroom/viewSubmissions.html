@@ -47,7 +47,7 @@
                             <li class="table-row">
                                 <div class="col col-1" data-label="S.No">{{ forloop.counter }}</div>
                                 <div class="col col-2" data-label="Student">{{submission.studentEmail}}</div>
-                                <div class="col col-3" data-label="Attachments"><a href="{{ submission.attachments.url }}">{{ submission.attachments}}</a></div>
+                                <div class="col col-3" data-label="Attachments"><a href="{{ submission.attachments.url }}" target="_blank">{{ submission.attachments}}</a></div>
                                 <div class="col col-4" data-label="Comment">{{submission.comment}}</div>
                                 <div class="col col-5" data-label="Submission Date">{{submission.submissionDate}}</div>
                             </li>

@@ -39,13 +39,21 @@
                             <div class="col col-51">Course ID</div>
                         </li>
                         {% for assignment in assignments %}
+                            {% if not assignment.resource %}
                             <li class="table-row">
                                 <div class="col col-11" data-label="Submission Date">{{ assignment.submissionDate }}</div>
                                 <div class="col col-21" data-label="Title">{{ assignment.title }}</div>
-                                <div class="col col-31" data-label="Attachments"><a href="{{ assignment.attachments.url }}">{{ assignment.attachments}}</a></div>
+                                <div class="col col-31" data-label="Attachments">
+                                    {% if assignment.attachments %}
+                                    <a href="{{ assignment.attachments.url }}" target="_blank">{{ assignment.attachments}}</a>
+                                    {% else %}
+                                        No attachments
+                                    {% endif %}
+                                </div>
                                 <div class="col col-41" data-label="Course">{{assignment.classroom.className}}</div>
                                 <div class="col col-51" data-label="Course ID">{{assignment.classroom.courseID}}</div>
                             </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>

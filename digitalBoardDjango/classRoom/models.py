@@ -45,6 +45,7 @@ class CreateAssignment(models.Model):
     attachments = models.FileField(max_length=200, blank=True)
     classroom = models.ForeignKey(Classroom, null=True, on_delete=models.SET_NULL)
     pinned = models.BooleanField(default=False, blank = True)
+    resource = models.BooleanField(default=False, blank = True)
 
 class AssignmentCodes(models.Model):
     """ List of Assignmnet Codes used so far"""
@@ -59,5 +60,5 @@ class SubmitAssignment(models.Model):
     attachments = models.FileField(max_length=200)
     assignment = models.ForeignKey(CreateAssignment, null=True, on_delete=models.SET_NULL)
     submissionDate = models.DateField(default=date.today)
-    comment = models.TextField(null=True)
+    comment = models.CharField(null=True, max_length=254)
     studentEmailAssignmentCode = models.CharField(max_length=254, primary_key=True)

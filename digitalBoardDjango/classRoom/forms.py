@@ -12,12 +12,12 @@ class JoinClassRoom(forms.Form):
 
 
 class CreateAssignmentForm(forms.Form):
-    title = forms.CharField(widget=forms.TextInput(
+    title = forms.CharField(max_length=254, widget=forms.TextInput(
         attrs={
         'class':'form-control',
         }
     ))
-    description = forms.CharField(required=False,widget=forms.TextInput(
+    description = forms.CharField(max_length=400, required=False,widget=forms.TextInput(
         attrs={
             'class':'form-control',
             }
@@ -28,23 +28,24 @@ class CreateAssignmentForm(forms.Form):
             'class':'form-control',
             }
     ))
-    attachments = forms.FileField(required=False, widget=forms.ClearableFileInput(
+    attachments = forms.FileField(max_length=200, required=False, widget=forms.ClearableFileInput(
         attrs={
         'class':'form-control-file',
         }
     ))
-    pin_item = forms.BooleanField(required=False, widget=forms.CheckboxInput(
 
-    ))
+    pin_item = forms.BooleanField(required=False, widget=forms.CheckboxInput())
+    resource = forms.BooleanField(required=False, widget=forms.CheckboxInput())
+
 
 class SubmitAssignmentForm(forms.Form):
-    attachments = forms.FileField(required=True, widget=forms.ClearableFileInput(
+    attachments = forms.FileField(max_length=200, required=True, widget=forms.ClearableFileInput(
         attrs={
         'class':'form-control-file',
         }
     ))
 
-    comment = forms.CharField(required=False,widget=forms.TextInput(
+    comment = forms.CharField(max_length=254, required=False,widget=forms.TextInput(
         attrs={
             'class':'form-control',
             }

@@ -219,6 +219,7 @@ def createAssignment(request, classId):
                 submissionDate = fm.cleaned_data['submission_date']
                 attachment = fm.cleaned_data['attachments']
                 pinned = fm.cleaned_data['pin_item']
+                resource = fm.cleaned_data['resource']
                 classroom = Classroom.objects.get(classTeacherMail = classId)
                 assignmentCode = getClassCode(8)
                 
@@ -247,7 +248,8 @@ def createAssignment(request, classId):
                                   attachments = attachment,
                                   assignmentCode = assignmentCode,
                                   classroom = classroom,
-                                  pinned = pinned
+                                  pinned = pinned,
+                                  resource = resource,
                                   )
                 createAssignmentObj.save()
                 messages.success(request, 'Assignment Created')

@@ -37,6 +37,8 @@
                     </div>
                     {% endfor %}
         {% endif %}
+
+
         <div class="container" style="margin-top:5%;">
             <div class="row">
                 {% if assignments %}
@@ -45,25 +47,27 @@
                             <div class="mb-30 col-md-6 col-lg-4">
                                 <div class="card">
                                     <img class="card-icon" src="{% static 'images/classroom/assignment.png' %}" alt="monitoring" >
-                                    <h3 class="card-title">{{ assignment.title }} <i class="fas fa-bookmark" style="margin-left: 10%;"></i> </h3> 
-                                    <h4 class="card-title"><i class="fas fa-calendar-alt"></i> {{assignment.submissionDate}} : Deadline</h4>
+                                    <h3 class="card-title">{{ assignment.title }} <i class="fas fa-thumbtack" style="margin-left: 10%;"></i> </h3> 
+                                    <h4 class="card-title"><i class="fas fa-calendar-alt"></i>Deadline: {{assignment.submissionDate}}</h4>
                                     <p class="card-text">
                                         {{ assignment.description }} <br>
                                         {% if assignment.attachments %}
-                                            <i class="fas fa-file-alt"></i> <a href="{{ assignment.attachments.url }}"> View Attachment</a> 
+                                            <i class="fas fa-file-alt"></i> <a href="{{ assignment.attachments.url }}" target="_blank"> View Attachment</a> 
                                         {% else %}
                                         <i class="fas fa-file-alt"></i> No attachments
                                         {% endif %}
                                     </p>
 
-                                    {% if user.is_staff %}
+                                    {% if user.is_staff and not assignment.resource %}
                                         <a href="{% url 'viewSubmissions' class.classTeacherMail assignment.assignmentCode %}">
                                             <button type="button" class="btn btn-info submissionButton">View Submissions</button>
                                         </a>
                                     {% else %}
+                                        {% if not assignment.resource %}
                                         <a href="{% url 'submitassignment' class.classTeacherMail assignment.assignmentCode %}">
                                             <button type="button" class="btn btn-info submissionButton">Click Here to Submit</button>
                                         </a>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </div>
@@ -76,24 +80,26 @@
                                 <div class="card">
                                     <img class="card-icon" src="{% static 'images/classroom/assignment.png' %}" alt="monitoring" >
                                     <h3 class="card-title">{{ assignment.title }}</h3> 
-                                    <h4 class="card-title"><i class="fas fa-calendar-alt"></i> {{assignment.submissionDate}} : Deadline</h4>
+                                    <h4 class="card-title"><i class="fas fa-calendar-alt"></i>Deadline: {{assignment.submissionDate}}</h4>
                                     <p class="card-text">
                                         {{ assignment.description }} <br>
                                         {% if assignment.attachments %}
-                                            <i class="fas fa-file-alt"></i> <a href="{{ assignment.attachments.url }}"> View Attachment</a> 
+                                            <i class="fas fa-file-alt"></i> <a href="{{ assignment.attachments.url }}" target="_blank"> View Attachment</a> 
                                         {% else %}
                                         <i class="fas fa-file-alt"></i> No attachments
                                         {% endif %}
                                     </p>
 
-                                    {% if user.is_staff %}
+                                    {% if user.is_staff and not assignment.resource  %}
                                         <a href="{% url 'viewSubmissions' class.classTeacherMail assignment.assignmentCode %}">
                                             <button type="button" class="btn btn-info submissionButton">View Submissions</button>
                                         </a>
                                     {% else %}
+                                        {% if not assignment.resource %}
                                         <a href="{% url 'submitassignment' class.classTeacherMail assignment.assignmentCode %}">
                                             <button type="button" class="btn btn-info submissionButton">Click Here to Submit</button>
                                         </a>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </div>

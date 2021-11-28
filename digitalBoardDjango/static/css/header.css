@@ -113,7 +113,7 @@ i {
 }
 
 
-@media(min-width: 992px){
+@media(min-width: 1300px){
 	.navbar-expand-custom {
 	    -ms-flex-flow: row nowrap;
 	    flex-flow: row nowrap;
@@ -136,7 +136,7 @@ i {
 }
 
 
-@media (max-width: 991px){
+@media (max-width: 1299px){
 	#navbarSupportedContent ul li a{
 		padding: 12px 30px;
 	}

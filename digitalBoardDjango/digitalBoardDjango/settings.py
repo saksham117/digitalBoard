@@ -187,3 +187,6 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_FILE_OVERWRITE = False # prevent file with same names from being overwritten. Files with same name will be appended with characters to differentiate btw them
 AWS_DEFAULT_ACL = None 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_REGION_NAME = "ap-south-1"
+AWS_S3_SIGNATURE_VERSION = "s3v4"
