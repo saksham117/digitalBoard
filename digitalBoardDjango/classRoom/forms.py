@@ -10,7 +10,7 @@ class CreateClassRoom(forms.Form):
 class JoinClassRoom(forms.Form):
     class_Code = forms.CharField(max_length=6, required=True)
 
-
+# form for creating assignment using Forms api
 class CreateAssignmentForm(forms.Form):
     title = forms.CharField(max_length=254, widget=forms.TextInput(
         attrs={
@@ -37,7 +37,7 @@ class CreateAssignmentForm(forms.Form):
     pin_item = forms.BooleanField(required=False, widget=forms.CheckboxInput())
     resource = forms.BooleanField(required=False, widget=forms.CheckboxInput())
 
-
+# form for submitting assignment using Forms api
 class SubmitAssignmentForm(forms.Form):
     attachments = forms.FileField(max_length=200, required=True, widget=forms.ClearableFileInput(
         attrs={
