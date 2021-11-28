@@ -39,14 +39,14 @@
     margin-right: -10%;
   }
   .responsive-table .col-2 {
-    flex-basis: 50%;
+    flex-basis: 40%;
     
   }
   .responsive-table .col-3 {
     flex-basis: 25%;
   }
   .responsive-table .col-4 {
-    flex-basis: 10%;
+    flex-basis: 20%;
   }
 
   .responsive-table .col-5 {

@@ -53,22 +53,7 @@
                             </div>
                         </div>
                     {% endfor %}
-                {% else %}
-                </div>
-                </div>
-                <section class="banner">
-                    <div class="container">
-                      <div class="banner-text">
-                        <h1>Join a Class!</h1>
-                        <p><strong>You haven't joined any class so for.</strong> To join a class, click on <strong>Join Class</strong> tab and enter a valid class code that has been shared with you. For more information, go to the <strong>About Section.</strong> If you are a teacher, you can also get started by creating a class.
-                        </p>
-                      </div>
-                    </div>
-                    <img class="banner-image" id = "joinClassImage" src="https://preview.ibb.co/bMi5Y6/banner_img.png" alt="monitoring" >
-                </section>
                 {% endif %}
-
-
 
                 {% if listOfClassesAsStudents %}
                     {% for class in listOfClassesAsStudents %}
@@ -87,6 +72,28 @@
                         
                     {% endfor %}
                 {% endif %}
+                
+                {% if not listOfClasses and not listOfClassesAsStudents  %}
+                </div>
+                </div>
+                <section class="banner">
+                    <div class="container">
+                      <div class="banner-text">
+                        <h1>Join a Class!</h1>
+                        <p><strong>You haven't joined any class so for.</strong> To join a class, click on <strong>Join Class</strong> tab and enter a valid class code that has been shared with you. For more information, go to the <strong>About Section.</strong> If you are a teacher, you can also get started by creating a class.
+                        </p>
+                      </div>
+                    </div>
+                    <img class="banner-image" id = "joinClassImage" src="https://preview.ibb.co/bMi5Y6/banner_img.png" alt="monitoring" >
+                </section>
+                {% endif %}
+            
+
+                
+
+
+
+                
               
             </div>
         </div>

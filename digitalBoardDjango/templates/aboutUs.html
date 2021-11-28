@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" href="{% static 'css/home/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home/aboutUs.css' %}">
+
 
 </head>
 
@@ -35,11 +37,34 @@
         <div class="container">
           <div class="banner-text">
             <h1>About Us</h1>
-            <p><strong>We are here to make your digital classroom experience as seamless as possible.</strong> Our tools make it simple to manage and submit your assignmnets, schedule offline classes and help you make most of your remote learning expereince</p>
+            <p>
+                Digital Classroom can be thought of as a <strong>submission tool</strong>, where teachers can upload assignments, share resources keep a track of all submissions so far, and the students can submit those assignments, keep a track of pending assignments and add comments as well.  
+            </p>
           </div>
         </div>
         <img class="banner-image" src="https://preview.ibb.co/bMi5Y6/banner_img.png" alt="monitoring" >
       </section>
+
+      <section class="dl-blurbs">
+        <dl>
+            <dt>Logging In</dt>
+            <dd>All users, be it teachers or students(in real life) are granted student access only. This makes them unable to create classes and subsequently assignments. This has been implemented as a security feature to prevent anyone from having teaching access. </dd>
+
+            <dt>Teacher Access</dt>
+            <dd>To get teaching access, click on the Request Teacher Access button. An email will be sent to admin as well as to you, indicating that you have requested for teaching access. If everything checks out well and you indeed are a teacher, the admin will grant you teaching access within 24 hours.</dd>
+            <dt>Join a Class</dt>
+            <dd>In order to join classes and submit assignments, you need to have class codes. Ask your teacher to share it with you. In the meantime you can join these classes, Class Code: b626R4 (Python), Class Code: 9Mxc1T (C++). Class codes are 6 digit alphanumeric unique strings.</dd>
+        </dl>
+        <dl>
+            <dt>Assignments</dt>
+            <dd>The teacher can upload both assignments as well as study materials. Assignments need to be submitted before the deadline. For resources, there are no submissions required. The deadline associated with resources means that teacher expects you to complete them before that date.</dd>
+            <dt>To Do List</dt>
+            <dd>The students get access to a to-do list. Using the to-do list they can keep a record of all the assignments that need to be submitted. The tasks in the to-do list are sorted chronologically, ie, the assignment having the closest submission date will appear first.</dd>
+    
+            <dt>Pin Items</dt>
+            <dd>The teachers can pin certain assignments and reading material. Pinned assignments will appear at the very top of the classroom. This helps the students to easily navigate to and access these important resources.</dd>
+        </dl>
+    </section>
       
       
     <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
