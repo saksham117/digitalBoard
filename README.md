@@ -4,6 +4,7 @@ We are here to make your digital classroom experience as seamless as possible. O
 
 Here is the link to the website: [Digital Board](https://digitalboard.herokuapp.com/)
 
+
 ## Contents ##
 
 - [Features](#features)
@@ -12,8 +13,10 @@ Here is the link to the website: [Digital Board](https://digitalboard.herokuapp.
   - [Student](#student)
   - [Teacher](#teacher) 
 - [Getting Started](#getting-started)
+- [Final Comments](#final-comments)
 - [Bug Reporting](#bug)
 - [Feature Request](#feature-request)
+
 
 
 <a id="features"></a>
@@ -30,7 +33,7 @@ Here is the link to the website: [Digital Board](https://digitalboard.herokuapp.
 <a id="key-points"></a>
 
 ## ⭐ Key Points
-- ### Loggin In 🚪
+- ### Logging In 🚪
   - All users, be it teachers or students(in real life) are granted student access only. This makes them unable to create classes and subsequently assignments. This has been implemented as a security feature to prevent anyone from having teaching access.
 - ### Teaching Access 👩‍🏫
   - To get teaching access, click on the Request Teacher Access button. An email will be sent to admin as well as to you, indicating that you have requested for teaching access. If everything checks out well and you indeed are a teacher, the admin will grant you teaching access within 24 hours. You need to log out and log in, for the changes to be visible.
@@ -45,6 +48,66 @@ Here is the link to the website: [Digital Board](https://digitalboard.herokuapp.
 
 ## 🚶‍♀️ Walkthrough 
 
+So lets take a look at our application.
+
+### Landing Page
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/home_page.png?raw=true)
+
+### About Us
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/about%20us.png?raw=true)
+
+Now click on Login with Google so that you can login into the application using your email id.
+
+### Logging In
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/sign%20in.png?raw=true)
+
+Depending on whether you are a student or you are a teacher, you get different options and tools. So lets explore them.
+
+<a id="student"></a>
+
+### 👨‍🎓 Student 
+
+#### Student Classroom
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/student%20classroom.png?raw=true)
+
+#### Joining a Class
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/student%20join%20class.png?raw=true)
+
+#### Viewing assignment within a class
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/student%20inside%20class.png?raw=true)
+
+#### Submitting Assignment
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/student%20submit%20assignment.png?raw=true)
+
+#### To Do List
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/student%20to%20do.png?raw=true)
+
+#### Requesting Teacher Access
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/student%20teaching%20access.png?raw=true)
+
+<a id="teacher"></a>
+
+### 👩‍🏫 Teacher 
+
+#### Teacher Classroom
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/teacher%20dashboard.png?raw=true)
+
+#### Create Class
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/teacher%20create%20class.png?raw=true)
+
+#### Viewing assignment within a class
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/teacher%20within%20class.png?raw=true)
+
+#### Creating assignments or study materials
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/teacher%20create%20assignment.png?raw=true)
+
+- Specify the title, add an optional description, add day of submision and an optional attachment.
+- Check the Pin item checkbox to Pin item to start
+- Check the Resource checkbox to create a resource and not an assignment
+
+#### Viewing submitted assignments 
+![](https://github.com/saksham117/digitalBoard/blob/main/Screenshots/teacher%20view%20submissions.png?raw=true)
+
 
 <a id="getting-started"></a>
 
@@ -52,26 +115,21 @@ Here is the link to the website: [Digital Board](https://digitalboard.herokuapp.
 
 - Fork this repository and clone it in your local environment.
 - Create a virtual environment and install relevant packages.
-  ### Anaconda ###
-  Go to the desired directory and run the following command in Anaconda Prompt:
-
-  ```bash
-  conda create -n myenv --file requirements_conda.txt
-  conda activate myenv
-  ```
-  Here myenv is the name of the virtual environment (can be set according to ones liking) amd requirement_conda.txt is the requirements file that has been provided alongside the  project. The second line of code activates the newly created virtual environment.
-
-  ### PIP ###
-  Go to the desired directory and run the following command in Commmand Prompt:
+  
+  - Go to the desired directory and run the following command in Commmand Prompt:
 
   ```bash
   pip install virtualenv
-  virtualenv myproject source myproject/venv/bin/activate
-  cd myproject
-  pip -r requirements_pip.txt
+  mkdir python-virtual-environments && cd python-virtual-environments
+  python3 -m venv name_of_venv
+  name_of_venv\Scripts\activate
+  pip -r requirements.txt
   ```
 
-  Here myproject is a folder that gets created. For ease, run git clone inside the myproject directory. requirements_pip.txt is the file which contains all the packages that need to be installed.
+  - Here the folder python-virtual-environments contains your virtual environment. Ideally place this folder in a central location like C:\Users\username. This will then maintain all your virtual environments.
+  - name_of_venv can be any thing which you want to set as the name of your virtual environment.
+  - Activate that environment and install requirements.txt
+  - Then navigate back to the directory where you cloned this repo
   
   
 - Go to web/settings.py and make the following changes in these lines of code.
@@ -92,23 +150,45 @@ Here is the link to the website: [Digital Board](https://digitalboard.herokuapp.
   - In NAME field specify the name of the database (create one, if not already present).
   - In user specify which user of MySQL you want to connet with and specify the password for that user.
 
+- You might also have to change the environment variables for setting AWS S3 bucket and email configuration. Follow these links to set environment variables:
+  -  [Windows](https://youtu.be/IolxqkL7cD8)
+  -  [MacOS/Linux](https://youtu.be/5iWhQWVXosU)
+
+- To set google authentication, follow this resource 
+  -  [Set up Google Authentication](https://www.section.io/engineering-education/django-google-oauth/)
+
 - Now after having the virtual environment activated, run the command:
   ```python
    python manage.py runserver
   ```
 
+- To create a superuser to access admin portal, write the following commands:
+  ```python
+   python manage.py createsuperuser
+  ```
+
+<a id="final-comments"></a>
+## 🙏 Final Comments
+
+- While implementing the project, it was ensured that the best practices of agile methodolgy were followed.
+- The front end part is not completely my contribution. I have taken help from resources like CodePen
+- While loggin in, you sometimes might get this error **Error 400: redirect_uri_mismatch** . This happens as Heroku and Google OAuth are not always able to communicate. Just go back and try to log in again. The error will disappear.
+  
 <a id="bug"></a>
 
 ## 🐛 Bug Reporting
 
-Feel free to [open an issue](https://github.com/saksham117/Samarthya_Grievance_Redressal_System/issues) on GitHub if you find any bug.
+Feel free to [open an issue](https://github.com/saksham117/digitalBoard/issues) on GitHub if you find any bug.
 
 <a id="feature-request"></a>
 
 ## ⭐ Feature Request
 
-- Feel free to [Open an issue](https://github.com/saksham117/Samarthya_Grievance_Redressal_System/issues) on GitHub to request any additional features you might need for your use case.
+- Feel free to [Open an issue](https://github.com/saksham117/digitalBoard/issues) on GitHub to request any additional features you might need for your use case.
 - Connect with me on [LinkedIn](https://www.linkedin.com/in/saksham-basandrai117/). I'd love ❤️️ to hear from you.
+  
+  
+
   
  
 
