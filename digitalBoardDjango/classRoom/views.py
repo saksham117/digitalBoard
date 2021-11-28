@@ -27,7 +27,7 @@ def getClassCode(length):
 # returns the home page
 def index(request):
     return render(request, "index.html")
-
+# returns the about us page
 def aboutUs(request):
     return render(request, "aboutUs.html")
 
@@ -166,6 +166,7 @@ def joinClass(request):
     else:
         return HttpResponseRedirect('/')
 
+# function resoponsible for sending email to user that their request has been received
 def sendEmail(request):
     if request.user.is_authenticated and not(request.user.is_staff):
         subject = 'Greetings from Digital Board'
@@ -205,7 +206,7 @@ def viewClassRoom(request, classId):
     else:
         return HttpResponseRedirect('/')
 
-
+# used by teacher to create assignments
 def createAssignment(request, classId):
     if request.user.is_authenticated and request.user.is_staff:
         if request.method == 'POST':
@@ -274,7 +275,7 @@ def createAssignment(request, classId):
         return HttpResponseRedirect('/')
 
 
-
+# used by students to submit the assignment
 def submitAssignment(request,classId, taskCode):
     if request.user.is_authenticated:
         if request.method == 'POST':
@@ -336,15 +337,17 @@ def submitAssignment(request,classId, taskCode):
     else: # when user is unauthenticated or not staff
         return HttpResponseRedirect('/')
 
-
+# used by teachers to view submissions made by students
 def viewSubmissions(request,classId, taskCode):
     if request.user.is_authenticated and request.user.is_staff:
 
         listOfSubmissions = None 
+#         get the classroom we are in
         classroom = Classroom.objects.get(classTeacherMail = classId)
 
 
-        try:
+        try: # try fetching the assignments for that classroom and using many to one relation checking 
+#             which assignmens have een submitted
             assignment = CreateAssignment.objects.get(assignmentCode = taskCode)
             submissions = assignment.submitassignment_set.all()
             listOfSubmissions = list(submissions)
