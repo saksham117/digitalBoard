@@ -3,8 +3,9 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.views.generic import TemplateView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from .forms import CreateClassRoom, JoinClassRoom, CreateAssignmentForm, SubmitAssignmentForm
-from .models import Classroom, StudentClassroom, TeacherClassroom, ClassCodes, AssignmentCodes, CreateAssignment, SubmitAssignment
+from .forms import CreateClassRoom, JoinClassRoom, CreateAssignmentForm, SubmitAssignmentForm, Question
+
+from .models import Classroom, StudentClassroom, TeacherClassroom, ClassCodes, AssignmentCodes, CreateAssignment, SubmitAssignment, VideoLectures
 from django.contrib import messages
 # for sending email to grant teaccher access
 from django.conf import settings
@@ -16,6 +17,14 @@ import string
 
 # for sorting to do list
 from operator import attrgetter
+
+
+# for gpt3
+from .key import returnKey
+import openai
+from .gpt import GPT
+from .gpt import Example
+import pandas as pd
 
 # helps to generate an alphanumeric classcode of given length
 def getClassCode(length):
@@ -417,4 +426,188 @@ def to_do_list(request):
         return HttpResponseRedirect('/')
 
 
+# adding functionality of chatbot(neoBot)
+
+# displaying all the video lectures
+def viewVideos(request, classId):
+    """
+        returns the page containing a list of all assignments that have been assigned
+    """
+    classroom = Classroom.objects.get(classTeacherMail = classId)
+    listOfVideos = None #stores a list of all the assignments
+    try:
+        # fetch all the classrooms the teacher teaches
+        videos = classroom.videolectures_set.all()
+        print(videos)
+        listOfVideos = list(videos)
+    except:
+        print("No video lectures exist yet")
+
+    context = {
+        'class' : classroom,
+        'videos' : listOfVideos,
+    }
+    return render(request, 'classroom/classroomVideo.html', context)
+
+
+# displaying particular video and chatbot
+
+
+def video(request, classId, videoId):
+
+    if request.method == 'POST':
+        gpt = None
+
+        if classId == 'Physics_sakshamdrdo@gmail.com':
+            gpt = science()
+        elif classId == 'C++_sakshambasandrai.be18cse@pec.edu.in':
+            gpt = cpp()
+        elif classId == 'Python_sakshambasandrai.be18cse@pec.edu.in':
+            gpt = pythonbot()
+        elif classId == 'DBMS_sakshamdrdo@gmail.com':
+            gpt = dbms()
+        else:
+            gpt = science()
+
+        fm = Question(request.POST)
+        if fm.is_valid():
+            prompt = fm.cleaned_data['question']
+            output = gpt.get_top_reply(prompt)
+            messages.success(request, output)
+            return redirect('video', classId = classId, videoId = videoId)
+    else:
+        classroom = Classroom.objects.get(classTeacherMail = classId)
+        video = VideoLectures.objects.get(videoCode = videoId)
+
+        fm = Question()
+        context = {
+            'class' : classroom,
+            'video' : video,
+            'form' : fm,
+        }
+
+        return render(request, 'classroom/video.html', context)
+
+
+def science():
+    openai.api_key = returnKey()
+    gpt = GPT(engine="davinci",
+            temperature=0.8,
+            output_prefix="",
+            max_tokens=400)
+
+    # add some code examples
+    """This is where our database will be inserted """
+
+    df = pd.read_csv(r'classRoom/databases/data.csv')
+    print(df.columns)
+    # print("Given Dataframe :\n", df)
+
+    print("\nIterating over rows using index attribute :\n")
+    
+    # iterate through each row and select 
+    # 'Name' and 'Stream' column respectively.
+    for ind in df.index:
+        #  print(df['Question'][ind], df['Answer'][ind]) #for testing
+        question = str(df['Question'][ind])
+        answer = str(df['Answer'][ind])
+        gpt.add_example(Example(question, answer))
+
+    # returns all the examples that we have fed to the gpt3 model
+    # all_examples = gpt.get_all_examples()
+    # print(all_examples)
+    print('Science function called')
+    return gpt 
+
+
+def cpp():
+    openai.api_key = returnKey()
+    gpt = GPT(engine="davinci",
+            temperature=0.8,
+            output_prefix="",
+            max_tokens=400)
+
+    # add some code examples
+    """This is where our database will be inserted """
+
+    df = pd.read_csv(r'classRoom/databases/c++.csv', encoding='cp1252')
+    print(df.columns)
+    # print("Given Dataframe :\n", df)
+
+    print("\nIterating over rows using index attribute :\n")
+    
+    # iterate through each row and select 
+    # 'Name' and 'Stream' column respectively.
+    for ind in df.index:
+        #  print(df['Question'][ind], df['Answer'][ind]) #for testing
+        question = str(df['Question'][ind])
+        answer = str(df['Answer'][ind])
+        gpt.add_example(Example(question, answer))
+
+    # returns all the examples that we have fed to the gpt3 model
+    # all_examples = gpt.get_all_examples()
+    # print(all_examples)
+    print('C++ function called')
+    return gpt 
+
+def pythonbot():
+    openai.api_key = returnKey()
+    gpt = GPT(engine="davinci",
+            temperature=0.8,
+            output_prefix="",
+            max_tokens=400)
+
+    # add some code examples
+    """This is where our database will be inserted """
+
+    df = pd.read_csv(r'classRoom/databases/python.csv')
+    print(df.columns)
+    # print("Given Dataframe :\n", df)
+
+    print("\nIterating over rows using index attribute :\n")
+    
+    # iterate through each row and select 
+    # 'Name' and 'Stream' column respectively.
+    for ind in df.index:
+        print(df['Question'][ind], df['Answer'][ind]) #for testing
+        question = str(df['Question'][ind])
+        answer = str(df['Answer'][ind])
+        gpt.add_example(Example(question, answer))
+
+    # returns all the examples that we have fed to the gpt3 model
+    # all_examples = gpt.get_all_examples()
+    # print(all_examples)
+    print('python function called')
+    return gpt 
+
+
+def dbms():
+    openai.api_key = returnKey()
+    gpt = GPT(engine="davinci",
+            temperature=0.8,
+            output_prefix="",
+            max_tokens=400)
+
+    # add some code examples
+    """This is where our database will be inserted """
+
+    df = pd.read_csv(r'classRoom/databases/dbms.csv', encoding='cp1252')
+    print(df.columns)
+    # print("Given Dataframe :\n", df)
+
+    print("\nIterating over rows using index attribute :\n")
+    
+    # iterate through each row and select 
+    # 'Name' and 'Stream' column respectively.
+    for ind in df.index:
+        #  print(df['Question'][ind], df['Answer'][ind]) #for testing
+        question = str(df['Question'][ind])
+        answer = str(df['Answer'][ind])
+        gpt.add_example(Example(question, answer))
+
+    # returns all the examples that we have fed to the gpt3 model
+    # all_examples = gpt.get_all_examples()
+    # print(all_examples)
+    print('DBMS function called')
+    return gpt 
 

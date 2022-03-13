@@ -50,3 +50,14 @@ class SubmitAssignmentForm(forms.Form):
             'class':'form-control',
             }
     ))
+
+
+# for gpt3
+
+class Question(forms.Form):
+    """
+        # form for creating class using form api
+    """
+    question = forms.CharField(max_length=300, required=True, 
+                                widget=forms.TextInput(attrs={'placeholder': 'Ask Me Anything',
+                                                               'class': 'form-control'}))

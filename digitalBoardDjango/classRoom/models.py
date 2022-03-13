@@ -4,6 +4,7 @@ List of Models
 
 from datetime import date
 from django.db import models
+from  embed_video.fields  import  EmbedVideoField
 
 
 # the field classTeacherMail is a primary key and is formed by concatenating className with
@@ -62,3 +63,14 @@ class SubmitAssignment(models.Model):
     submissionDate = models.DateField(default=date.today)
     comment = models.CharField(null=True, max_length=254)
     studentEmailAssignmentCode = models.CharField(max_length=254, primary_key=True)
+
+
+# model to store all the videos uploaded as of now
+class VideoLectures(models.Model):
+    """ List of Videos """
+    title = models.CharField(max_length=100)
+    description = models.TextField(null=True)
+    videoCode = models.CharField(max_length=10)
+    link = models.URLField()
+    classroom = models.ForeignKey(Classroom, null=True, on_delete=models.SET_NULL)
+    video = EmbedVideoField()

@@ -12,6 +12,12 @@
             <li class="nav-item ">
                 <a class="nav-link" href="{% url 'classroom' %}"><i class="fas fa-chalkboard-teacher"></i><span class="nav-text">Classroom</span></a>
             </li>
+
+            <li class="nav-item ">
+                <a class="nav-link" href="{% url 'viewvideos' class.classTeacherMail  %}"><i class="fas fa-play-circle"></i><span class="nav-text">Videos</span></a>
+            </li>
+
+
             <li class="nav-item ">
                 <a class="nav-link" href="{% url 'classroomcontent' class.classTeacherMail %}"><i class="fas fa-book"></i><span class="nav-text">Assignments</span></a>
             </li>

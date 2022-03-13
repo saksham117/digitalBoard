@@ -21,5 +21,10 @@ urlpatterns = [
     path('classroomcontent/<str:classId>/<str:taskCode>/viewsubmissions', views.viewSubmissions,
     name='viewSubmissions'),
 
+    path('classroomcontent/<str:classId>/videoLectures', views.viewVideos, name='viewvideos'),
+    path('classroomcontent/<str:classId>/videoLectures/<str:videoId>/', views.video, name='video'),
+
+
+
 
 ]
